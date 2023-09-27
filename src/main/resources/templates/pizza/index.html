@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head th:replace="fragments/head :: head('Pizza Menu')"></head>
+
+<body>
+
+<div class="container bg-light w-50 h-100 mt-5 text-center text-uppercase">
+
+    <h1 class="m-2 pt-2">menu</h1>
+
+    <form
+      th:action="@{/}"
+      method="get"
+    >
+    <div class="input-group p-4">
+        <input type="search" class="form-control" placeholder="insert name"
+        name="keyword" th:value="${keyword}">
+        <button class="btn btn-danger">Search</button>
+    </div>
+
+    </form>
+
+    <div  th:if="${pizza.size()>0}" >
+    <div th:each="pizza : ${pizza}" class="card">
+        <img th:src="${pizza.image}" alt="pizza image">
+        <div class="card-body">
+            <h5 th:text="${pizza.name}"class="card-title"></h5>
+            <div class="d-flex align-items-center justify-content-center">
+            <a th:href="@{/show/{id}(id=${pizza.id})}" class="btn btn-danger"><i class="fa-solid fa-pizza-slice"></i></a>
+            <a th:href="@{/edit/{id}(id=${pizza.id})}" class="btn btn-danger"><i class="fa-solid fa-pen-to-square"></i></a>
+            <form  th:action="@{delete/{id}(id=${pizza.id})}"
+            method="post">
+                <button class="btn btn-danger" type="submit"><i class="fa-regular fa-trash-can"></i></button>
+            </form>
+            </div>
+        </div>
+    </div>
+    </div>
+    <div class="alert alert-info" th:unless="${pizza.size()>0}">The List is Empty</div>
+
+    <div class="p-3">
+
+        <a class="btn btn-danger" th:href="@{/create}">Create your pizza</a>
+
+    </div>
+
+</div>
+
+
+</body>
+</html>

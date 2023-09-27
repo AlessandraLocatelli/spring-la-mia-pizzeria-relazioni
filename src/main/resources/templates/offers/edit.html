@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" >
+
+<head th:replace="fragments/head :: head('Edit Your Special Offer')"></head>
+
+<body>
+
+<div class="container bg-light w-50 h-100 mt-5">
+
+    <h1 class="m-2 text-center">Edit Your Special Offer</h1>
+    <hr>
+
+    <form
+            id ="offer-form"
+            th:action= "@{/specialoffers/edit/{id}(id=${offer.id})}"
+            th:object ="${offer}"
+            method="post"
+    >
+
+        <input type="hidden" th:field="*{pizza}">
+
+        <div class="m-2">
+            <label for="title" class="form-label">Name</label>
+            <input type="text" class="form-control" id="title" th:field="*{title}" required
+                   th:errorClass="is-invalid">
+            <div class="invalid-feedback" th:if="${#fields.hasErrors('title')}">
+                <ul>
+                    <li th:each="err: ${#fields.errors('title')}" th:text="${err}"></li>
+
+                </ul>
+            </div>
+        </div>
+
+        <div class="m-2">
+            <label for="start" class="form-label">Starts</label>
+            <input type="text" class="form-control" id="start" th:field="*{startDate}" required
+                   th:errorClass="is-invalid">
+            <div class="invalid-feedback" th:if="${#fields.hasErrors('startDate')}">
+                <ul>
+
+                    <li th:each="err: ${#fields.errors('startDate')}" th:text="${err}"></li>
+
+                </ul>
+            </div>
+        </div>
+
+        <div class="m-2">
+            <label for="end" class="form-label">Expires</label>
+            <input type="text" class="form-control" id="end" th:field="*{endDate}" required
+                   th:errorClass="is-invalid">
+            <div class="invalid-feedback" th:if="${#fields.hasErrors('endDate')}">
+                <ul>
+
+                    <li th:each="err: ${#fields.errors('endDate')}" th:text="${err}"></li>
+
+                </ul>
+            </div>
+        </div>
+
+
+        <div class="m-3 p-2">
+            <button type="submit" class="btn btn-danger">Edit</button>
+            <a class="btn btn-danger" th:href="@{/show/{pizzaId}(pizzaId=${offer.pizza.id})}">Cancel</a>
+        </div>
+
+
+    </form>
+
+</div>
+
+
+</body>
+</html>
