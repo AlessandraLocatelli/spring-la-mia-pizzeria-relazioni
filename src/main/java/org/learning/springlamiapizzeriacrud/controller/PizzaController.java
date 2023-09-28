@@ -1,7 +1,9 @@
 package org.learning.springlamiapizzeriacrud.controller;
 
 import jakarta.validation.Valid;
+import org.learning.springlamiapizzeriacrud.model.Ingredient;
 import org.learning.springlamiapizzeriacrud.model.Pizza;
+import org.learning.springlamiapizzeriacrud.repository.IngredientRepository;
 import org.learning.springlamiapizzeriacrud.repository.PizzaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,6 +23,8 @@ public class PizzaController {
     @Autowired
     private PizzaRepository pizzaRepository;
 
+    @Autowired
+    private IngredientRepository ingredientRepository;
 
     @GetMapping()
     public String index(Model model, @RequestParam("keyword") Optional<String> searchKeyword) {
@@ -64,6 +68,8 @@ public class PizzaController {
     {
 
         model.addAttribute("pizza",new Pizza());
+        List<Ingredient> ingredientsList = ingredientRepository.findAll();
+        model.addAttribute("ingredientsList",ingredientsList);
 
         return "pizza/form";
     }
@@ -73,6 +79,7 @@ public class PizzaController {
 
         if (bindingResult.hasErrors())
         {
+            List<Ingredient> ingredientsList = ingredientRepository.findAll();
             return "pizza/form";
 
         }
@@ -89,11 +96,12 @@ public class PizzaController {
     @GetMapping("/edit/{id}")
     public String edit(@PathVariable Integer id, Model model)
     {
-
-      Optional<Pizza> result =  pizzaRepository.findById(id);
+        List<Ingredient> ingredientsList = ingredientRepository.findAll();
+        Optional<Pizza> result =  pizzaRepository.findById(id);
 
       if(result.isPresent())
       {
+          model.addAttribute("ingredientsList",ingredientsList);
           model.addAttribute("pizza",result.get());
           return "pizza/form";
       }
@@ -108,7 +116,7 @@ public class PizzaController {
 
         if(bindingResult.hasErrors())
         {
-
+            List<Ingredient> ingredientsList = ingredientRepository.findAll();
             return "pizza/form";
         }
 

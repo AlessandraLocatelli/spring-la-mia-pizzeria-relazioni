@@ -1,7 +1,10 @@
 <!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments/head :: head('Pizza Details')"></head>
+
 <body>
+<nav th:replace="fragments/navbar :: navbar(area='menu')"></nav>
+
 <div class="container bg-light w-50 h-100 mt-5 text-center">
     <h1 th:text="${pizza.name}" class="text-uppercase m-3"></h1>
     <hr>
@@ -12,7 +15,12 @@
             <div class="card-body">
                 <p th:text="${pizza.description}" class="card-text"></p>
                 <p th:text="|${pizza.price}€|" class="card-text"></p>
-                <a th:href="@{/}" class="btn btn-danger">Menu</a>
+                <div th:if="${pizza.ingredients.size() > 0}">
+                    <p class="pe-1">Extra:</p>
+                <p th:each="i : ${pizza.ingredients}"
+                   th:text="|${i.name}|"></p>
+                </div>
+                <a th:href="@{/}" class="btn btn-danger mt-2">Menu</a>
             </div>
         </div>
      </div>
@@ -21,7 +29,7 @@
         <h2>Special Offers</h2>
         <div class="my-3">
             <a class="btn btn-danger" th:href="@{/specialoffers/create(pizzaId=${pizza.id})}">Add
-                Special Offer</a>
+                a special offer</a>
         </div>
 
 
@@ -66,7 +74,7 @@
             There are no special offers yet.
         </div>
 
-    </div>
+        </div>
 
 </div>
 

@@ -38,6 +38,9 @@ public class Pizza {
     @OneToMany (mappedBy = "pizza", cascade = {CascadeType.REMOVE})
     private List<Offer> offers;
 
+    @ManyToMany
+    List<Ingredient> ingredients;
+
     public Integer getId()
     {
         return id;
@@ -88,5 +91,13 @@ public class Pizza {
 
     public void setOffers(List<Offer> offers) {
         this.offers = offers;
+    }
+
+    public List<Ingredient> getIngredients() {
+        return ingredients;
+    }
+
+    public void setIngredients(List<Ingredient> ingredients) {
+        this.ingredients = ingredients;
     }
 }

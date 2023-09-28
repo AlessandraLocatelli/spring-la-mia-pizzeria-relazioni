@@ -5,10 +5,12 @@
 
 <body>
 
+
 <div class="container bg-light w-50 h-100 mt-5">
 
     <h1 class="m-2 text-center" th:text="${pizza.id != null ? 'EDIT YOUR PIZZA' : 'CREATE YOUR PIZZA' }" ></h1>
     <hr>
+
 
     <form
     id ="pizza-form"
@@ -68,8 +70,15 @@
             </div>
         </div>
 
+
+        <div class="form-check" th:each="i : ${ingredientsList}">
+            <input class="form-check-input" type="checkbox" th:value="${i.id}"
+                   th:id="|ingredient_${i.id}|" th:field="*{ingredients}">
+            <label class="form-check-label" th:for="|ingredient_${i.id}|" th:text="${i.name}"></label>
+        </div>
+
         <div class="m-3 p-2">
-            <button type="submit" class="btn btn-danger">Create</button>
+            <button type="submit" class="btn btn-danger">Save</button>
             <a class="btn btn-danger" th:href="@{/}">Cancel</a>
         </div>
 
